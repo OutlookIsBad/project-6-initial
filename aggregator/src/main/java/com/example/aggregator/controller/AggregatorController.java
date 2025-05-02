@@ -51,4 +51,64 @@ public class AggregatorController {
 
         return entry;
     }
+
+    @GetMapping("getWordsThatContainSuccessiveLettersAndStartsWith/{chars}")
+    public List<Entry> getWordsThatContainSuccessiveLettersAndStartsWith(@PathVariable String chars) {
+
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        List<Entry> entry = aggregatorService.getWordsThatContainSuccessiveLettersAndStartsWith(chars);
+        stopWatch.stop();
+
+        long nanoSeconds = stopWatch.getLastTaskTimeNanos();
+        String message = new StringBuilder()
+                .append("Retrieved ")
+                .append(entry.size())
+                .append(" entries for words with successive letters that contain [")
+                .append(chars)
+                .append("] in ")
+                .append(nanoSeconds / 1000000.0)
+                .append("ms")
+                .toString();
+        logger.info(message);
+
+        return entry;
+    }
+
+    @GetMapping("getWordsThatContain/{chars}")
+    public List<Entry> getWordsThatContain(@PathVariable String chars) {
+
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        List<Entry> entry = aggregatorService.getWordsThatContain(chars);
+        stopWatch.stop();
+
+        long nanoSeconds = stopWatch.getLastTaskTimeNanos();
+        String message = new StringBuilder()
+                .append("Retrieved entries for words that contain [")
+                .append(chars)
+                .append("] in ")
+                .append(nanoSeconds / 1000000.0)
+                .append("ms")
+                .toString();
+        logger.info(message);
+
+        return entry;
+    }
+
+    @GetMapping("/getAllPalindromes")
+    public List<Entry> getAllPalindromes() {
+
+        return aggregatorService.getAllPalindromes();
+    }
+
+    @GetMapping("/getWordsStartingWith/{prefix}")
+    public List<Entry> getWordsStartingWith(@PathVariable String prefix) {
+        return aggregatorService.getWordsStartingWith(prefix);
+    }
+
+    @GetMapping("/getWordsThatContainSpecificConsecutiveLetters/{letters}")
+    public List<Entry> getWordsThatContainSpecificConsecutiveLetters(@PathVariable String letters) {
+        return aggregatorService.getWordsThatContainSpecificConsecutiveLetters(letters);
+    }
 }

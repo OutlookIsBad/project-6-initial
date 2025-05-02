@@ -74,6 +74,12 @@ public class DictionaryController {
         return entries;
     }
 
+    @GetMapping("/getWordsEndingWith/{value}")
+    public List<Entry> getWordsEndingWith(@PathVariable String value) {
+        logger.info("Fetching words ending with {}", value);
+        return dictionaryService.getWordsEndingWith(value);
+    }
+
     @GetMapping("/getWordsThatContain/{value}")
     public List<Entry> getWordsThatContain(@PathVariable String value) {
 
